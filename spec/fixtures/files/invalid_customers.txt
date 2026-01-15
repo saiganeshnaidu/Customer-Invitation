@@ -1,0 +1,2 @@
+{"latitude": "19.0590317", "longitude": "72.7553452", "name": "Sai", "user_id": 1}
+INVALID_JSON_LINE

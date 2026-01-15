@@ -1,0 +1,81 @@
+openapi: 3.0.3
+info:
+  title: Customer Invitation API
+  description: |
+    API to upload customer data and retrieve customers eligible for invitation
+    based on distance from the Mumbai office within 100KM.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /api/v1/customers/invitees:
+    post:
+      summary: Get customers eligible for invitation
+      description: |
+        Upload a text file containing customer records (one JSON object per line).
+        The API filters customers within 100 km of the Mumbai office and returns
+        a sorted list by user_id.
+      tags:
+        - Customers
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Text file with one JSON object per line
+      responses:
+        "200":
+          description: Successfully retrieved eligible customers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customers:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Customer"
+        "400":
+          description: Bad request (missing file)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Unprocessable entity (invalid file format)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Sai
+      required:
+        - user_id
+        - name
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Invalid JSON format detected in input file
