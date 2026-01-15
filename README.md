@@ -40,8 +40,9 @@
 
 # Clone the repository
 
-  git clone <repository-url>
-  cd <project-name>
+  git clone git@github.com:saiganeshnaidu/Customer-Invitation.git
+
+  cd customer_invite
 
 
 # Install the dependencies
