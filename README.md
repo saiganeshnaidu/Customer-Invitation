@@ -65,3 +65,8 @@
 # Running Test cases 
   <!-- 3 test files for each service, demonstrates distance calculation, file parsing, and filtering logic.  -->
   bundle exec rspec
+
+
+# API Documentation
+
+docs/swagger.yaml
